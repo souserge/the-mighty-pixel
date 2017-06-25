@@ -1,0 +1,76 @@
+@import url('https://fonts.googleapis.com/css?family=Josefin+Sans|Raleway');
+
+body {
+  background-color: #d9fbff;
+  font-family: 'Raleway', sans-serif;
+  font-size: 1.5em;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  font-family: 'Josefin Sans', serif;
+  font-size: 3em;
+}
+
+a:focus {
+  outline: none;
+}
+
+header, main {
+  margin: 12px auto;
+  width: 55%;
+}
+
+header {
+  min-width: 20.5em;
+}
+
+main {
+  border: #ff80bf dotted;
+  border-radius: 12px;
+  padding: 8px;
+}
+
+.head-line {
+  display: inline-block;
+  position: fixed;
+  height: 1px;
+  padding-top: 14px;
+  background-color: #ff80bf;
+  top: 0;
+  width: 100%;
+}
+
+main article p {
+  line-height: 1.5em;
+  margin: 0;
+  padding: 0.5em 0 2em 1em;
+}
+
+main nav {
+  margin: 0 auto;
+  text-align: center;
+}
+
+#puppy {
+  margin: 0 auto;
+  width: 16vmax;
+  height: 16vmax;
+  border-radius: 100%;
+  background: url('./img/puppy.gif') center center no-repeat;
+  background-color: #4d2144;
+  background-size: 90%;
+  transition: all 0.3s;
+  margin-bottom: 1vmax;
+  padding: 0;
+}
+
+#puppy:hover {
+  background-image: url('./img/puppy_love.gif');
+  background-size: 85%;
+  width: 17vmax;
+  height: 17vmax;
+  transform: translate(0, -0.5vmax);
+  margin-bottom: 0;
+}
