@@ -4,9 +4,9 @@ const ROWS = 512,
 const express = require('express'),
       socket = require('socket.io')
       app = express(),
-      port = 3000,
+      port = 80,
       server = app.listen(port),
-      io = socket(server)
+      io = socket(server),
       grid = new Array(ROWS*COLS).fill(15)
 
 
