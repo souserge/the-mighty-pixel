@@ -1,0 +1,14 @@
+body {
+  padding: 0;
+  margin: 0;
+}
+
+#pick-color {
+  top: 500px;
+}
+
+#draw-place {
+  width: 100vmin;
+  height: 70vmin;
+  overflow: scroll;
+}
