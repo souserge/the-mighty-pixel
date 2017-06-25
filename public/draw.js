@@ -12,7 +12,7 @@ function setup() {
 
   socket.on('grid', function(data) {
     console.log("received grid")
-    grid = data.grid
+    grid = bufferToGrid(data.gridBuff)
     drawGrid()
 
     socket.on('mouse', function(data) {
@@ -60,4 +60,8 @@ function placePixel(x, y, color) {
   noStroke()
   fill(palette[color])
   rect(x*scl, y*scl, scl, scl)
+}
+
+function bufferToGrid(buff) {
+  return new Uint8Array(buff)
 }
