@@ -58,7 +58,7 @@ main nav {
   width: 16vmax;
   height: 16vmax;
   border-radius: 100%;
-  background: url('./img/puppy.gif') center center no-repeat;
+  background: url('../img/puppy.gif') center center no-repeat;
   background-color: #4d2144;
   background-size: 90%;
   transition: all 0.3s;
@@ -67,7 +67,7 @@ main nav {
 }
 
 #puppy:hover {
-  background-image: url('./img/puppy_love.gif');
+  background-image: url('../img/puppy_love.gif');
   background-size: 85%;
   width: 17vmax;
   height: 17vmax;
