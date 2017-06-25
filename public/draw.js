@@ -6,6 +6,7 @@ let grid = null,
     canvas = null
 
 let scl = 8
+let isMouseOnCanvas = false
 
 function setup() {
   initUI()
@@ -27,18 +28,36 @@ function setup() {
 function initUI() {
   canvas = createCanvas(scl*globals.COLS, scl*globals.ROWS)
   canvas.parent('draw-place')
+  canvas.mouseOut(() => {isMouseOnCanvas = false})
+  canvas.mouseOver(() => {isMouseOnCanvas = true})
+
   background(0)
   grid = new Array(globals.ROWS*globals.COLS).fill(15)
   colorPicker = new EightBitColorPicker({ el: 'pick-color' })
   palette = EightBitColorPicker.getDefaultPalette()
+
 }
 
 function mousePressed() {
-  const x = Math.floor(mouseX/scl),
-        y = Math.floor(mouseY/scl),
-        color = colorPicker.get8BitColor(),
-        idx = y*globals.COLS + x
+  handleMouse()
+}
 
+function mouseDragged() {
+  handleMouse()
+}
+
+function handleMouse() {
+  if (!focused) return
+  if (!isMouseOnCanvas) return
+
+  const x = Math.floor(mouseX/scl),
+        y = Math.floor(mouseY/scl)
+  if (x < 0 || x >= globals.COLS || y < 0 || y >= globals.ROWS) return
+
+  const color = colorPicker.get8BitColor()
+  if (color < 0 || color >= 256) return
+
+  const idx = y*globals.COLS + x
   grid[idx] = color
   placePixel(x, y, color)
   socket.emit('mouse', {
