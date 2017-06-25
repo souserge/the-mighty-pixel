@@ -12,16 +12,6 @@ main {
   height: 70vmin;
 }
 
-.head-line {
-  display: inline-block;
-  position: fixed;
-  height: 1px;
-  padding-bottom: 14px;
-  background-color: #ff80bf;
-  top: 0;
-  width: 100%;
-}
-
 #pick-color {
 }
 

@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css?family=Josefin+Sans|Raleway');
+
+body {
+  background-color: #d9fbff;
+  font-family: 'Raleway', sans-serif;
+  font-size: 1.5em;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  font-family: 'Josefin Sans', serif;
+  font-size: 3em;
+}
+
+a:focus {
+  outline: none;
+}
+
+.head-line {
+  display: inline-block;
+  position: fixed;
+  height: 1px;
+  padding-bottom: 14px;
+  background-color: #ff80bf;
+  top: 0;
+  width: 100%;
+}
