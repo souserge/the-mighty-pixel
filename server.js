@@ -1,13 +1,12 @@
-const ROWS = 512,
-      COLS = 512
-
 const express = require('express'),
-      socket = require('socket.io')
-      app = express(),
-      port = process.env.port || process.env.PORT || 1337
+      socket = require('socket.io'),
+      globals = require('./public/globals')
+
+const app = express(),
+      port = process.env.port || process.env.PORT || 1337,
       server = app.listen(port),
       io = socket(server),
-      grid = new Array(ROWS*COLS).fill(15)
+      grid = new Array(globals.ROWS*globals.COLS).fill(globals.INIT_COLOR)
 
 
 app.use(express.static('public'))

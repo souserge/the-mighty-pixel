@@ -1,42 +1,43 @@
-const ROWS = 512
-const COLS = 512
+const socket = io.connect()
+
+let grid = null,
+    colorPicker = null,
+    palette = null,
+    canvas = null
 
 let scl = 8
 
-const socket = io.connect()
-
-let grid = null
-let colorPicker = null
-let palette = null
-let canvas = null
-
 function setup() {
-  canvas = createCanvas(scl*COLS, scl*ROWS)
-  canvas.parent('draw-place')
-  background(0)
-  grid = new Array(ROWS*COLS).fill(15)
-  colorPicker = new EightBitColorPicker({ el: 'pick-color' })
-  palette = EightBitColorPicker.getDefaultPalette()
+  initUI()
 
   socket.on('grid', function(data) {
     console.log("received grid")
     grid = data.grid
     drawGrid()
-  })
 
-  socket.on('mouse', function(data) {
-    grid[data.idx] = data.color
-    const x = data.idx % COLS,
-          y = Math.floor(data.idx / COLS)
-    placePixel(x, y, data.color)
+    socket.on('mouse', function(data) {
+      grid[data.idx] = data.color
+      const x = data.idx % globals.COLS,
+            y = Math.floor(data.idx / globals.COLS)
+      placePixel(x, y, data.color)
+    })
   })
+}
+
+function initUI() {
+  canvas = createCanvas(scl*globals.COLS, scl*globals.ROWS)
+  canvas.parent('draw-place')
+  background(0)
+  grid = new Array(globals.ROWS*globals.COLS).fill(15)
+  colorPicker = new EightBitColorPicker({ el: 'pick-color' })
+  palette = EightBitColorPicker.getDefaultPalette()
 }
 
 function mousePressed() {
   const x = Math.floor(mouseX/scl),
         y = Math.floor(mouseY/scl),
         color = colorPicker.get8BitColor(),
-        idx = y*COLS + x
+        idx = y*globals.COLS + x
 
   grid[idx] = color
   placePixel(x, y, color)
@@ -47,10 +48,10 @@ function mousePressed() {
 }
 
 function drawGrid() {
-  for (let y = 0; y < ROWS; y++) {
-    for (let x = 0; x < COLS; x++) {
-      let idx = y*COLS + x //can be optimized
-      placePixel(x, y, grid[idx])
+  let idx = 0
+  for (let y = 0; y < globals.ROWS; y++) {
+    for (let x = 0; x < globals.COLS; x++) {
+      placePixel(x, y, grid[idx++])
     }
   }
 }
