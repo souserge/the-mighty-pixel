@@ -1,0 +1,22 @@
+{
+  "name": "sockets-test",
+  "version": "1.0.0",
+  "description": "sockets test",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [
+    "sockets",
+    "p5.js",
+    "test"
+  ],
+  "author": "Serge Korzh",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.14.0",
+    "ip": "^1.1.4",
+    "socket.io": "^1.7.2"
+  }
+}
