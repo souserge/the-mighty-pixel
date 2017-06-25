@@ -3,8 +3,7 @@ const COLS = 512
 
 let scl = 8
 
-const ipAddress = 'http://localhost:3000'
-const socket = io.connect(ipAddress)
+const socket = io.connect()
 
 let grid = null
 let colorPicker = null
