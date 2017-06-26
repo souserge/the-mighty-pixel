@@ -38,6 +38,9 @@ function initUI() {
   canvas.mouseOver(() => {isMouseOnCanvas = true})
   colorPicker = new EightBitColorPicker({ el: 'pick-color' })
   palette = EightBitColorPicker.getDefaultPalette()
+
+  textSize(32);
+  text("Loading canvas...", 10, 30);
 }
 
 function mousePressed() {
@@ -71,7 +74,6 @@ function handleMouse() {
 
 function drawGrid() {
   grid.forEach((value, key) => {
-    console.log(key + ' => ' + value)
     const x = key % globals.COLS,
           y = Math.floor(key / globals.COLS)
     placePixel(x, y, value)

@@ -26,7 +26,6 @@ io.sockets.on('connection', function(socket) {
       grid.delete(idx)
     } else {
       grid.set(idx, color)
-      console.log(idx + " => " + color)
     }
     socket.broadcast.emit('mouse', data) // broadcast to all EXCEPT the current socket
   });
