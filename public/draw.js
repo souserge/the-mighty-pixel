@@ -11,9 +11,13 @@ let isMouseOnCanvas = false
 function setup() {
   initUI()
   background(palette[globals.INIT_COLOR])
+  textSize(32)
+  fill(255)
+  text("Loading canvas...", 10, 30)
   socket.on('grid', function(data) {
     console.log('received grid')
     bufferToGrid(data)
+    background(palette[globals.INIT_COLOR])
     drawGrid()
 
     socket.on('mouse', function(data) {
@@ -38,9 +42,6 @@ function initUI() {
   canvas.mouseOver(() => {isMouseOnCanvas = true})
   colorPicker = new EightBitColorPicker({ el: 'pick-color' })
   palette = EightBitColorPicker.getDefaultPalette()
-
-  textSize(32);
-  text("Loading canvas...", 10, 30);
 }
 
 function mousePressed() {
