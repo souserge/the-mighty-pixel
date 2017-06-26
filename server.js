@@ -6,26 +6,28 @@ const app = express(),
       port = process.env.port || process.env.PORT || 1337,
       server = app.listen(port),
       io = socket(server),
-      grid = new Array(globals.ROWS*globals.COLS).fill(globals.INIT_COLOR)
-
+      grid = new Map()
 
 app.use(express.static('public'))
 console.log("server is running on PORT: " + port)
 io.sockets.on('connection', function(socket) {
   console.log('new connection: ' + socket.id)
-
-  socket.emit('grid', {gridBuff: gridToBuffer()})
+  const keys = new Uint32Array(grid.keys())
+  const values = new Uint8Array(grid.values())
+  socket.emit('grid', {
+    keys: Buffer.from(keys.buffer),
+    values: Buffer.from(values.buffer)
+  })
 
   socket.on('mouse', function(data) {
-    grid[data.idx[0]] = data.color[0]
+    const idx = data.idx[0],
+          color = data.color[0]
+    if (color == globals.INIT_COLOR) {
+      grid.delete(idx)
+    } else {
+      grid.set(idx, color)
+      console.log(idx + " => " + color)
+    }
     socket.broadcast.emit('mouse', data) // broadcast to all EXCEPT the current socket
   });
 });
-
-function gridToBuffer() {
-  const buff = Buffer.allocUnsafe(grid.length)
-  grid.forEach((el, idx) => {
-    buff.writeUInt8(el, idx)
-  })
-  return buff
-}
