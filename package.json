@@ -1,19 +1,22 @@
 {
-  "name": "sockets-test",
-  "version": "1.0.0",
-  "description": "sockets test",
+  "name": "the-mighty-pixel",
+  "version": "0.0.1",
+  "description": "a collaborative drawing application",
+  "repository": "escaip/the-mighty-pixel",
+  "author": "Serge Korzh",
+  "license": "MIT",
+
+  "keywords": [
+    "drawing",
+    "pixel-art",
+    "sockets",
+    "p5.js"
+  ],
+
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
-  "keywords": [
-    "sockets",
-    "p5.js",
-    "test"
-  ],
-  "author": "Serge Korzh",
-  "license": "ISC",
   "dependencies": {
     "express": "^4.14.0",
     "ip": "^1.1.4",
