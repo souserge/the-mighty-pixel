@@ -17,10 +17,12 @@ function setup() {
     drawGrid()
 
     socket.on('mouse', function(data) {
-      grid[data.idx] = data.color
-      const x = data.idx % globals.COLS,
-            y = Math.floor(data.idx / globals.COLS)
-      placePixel(x, y, data.color)
+      const color = data.color[0],
+            idx = data.idx[0]
+      grid[idx] = color
+      const x = idx % globals.COLS,
+            y = Math.floor(idx / globals.COLS)
+      placePixel(x, y, color)
     })
   })
 }
@@ -32,10 +34,9 @@ function initUI() {
   canvas.mouseOver(() => {isMouseOnCanvas = true})
 
   background(0)
-  grid = new Array(globals.ROWS*globals.COLS).fill(15)
+  grid = new Array(globals.ROWS*globals.COLS).fill(15) // Delete in production
   colorPicker = new EightBitColorPicker({ el: 'pick-color' })
   palette = EightBitColorPicker.getDefaultPalette()
-
 }
 
 function mousePressed() {
@@ -47,8 +48,7 @@ function mouseDragged() {
 }
 
 function handleMouse() {
-  if (!focused) return
-  if (!isMouseOnCanvas) return
+  if (!focused || !isMouseOnCanvas) return
 
   const x = Math.floor(mouseX/scl),
         y = Math.floor(mouseY/scl)
@@ -61,8 +61,8 @@ function handleMouse() {
   grid[idx] = color
   placePixel(x, y, color)
   socket.emit('mouse', {
-    idx,
-    color
+    idx: new Uint32Array([idx]),
+    color: new Uint8Array([color])
   })
 }
 
