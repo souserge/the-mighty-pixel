@@ -2,22 +2,34 @@ body {
   padding: 0;
   margin: 0;
   background-color: #d9fbff;
+  overflow: hidden;
 }
 
 main {
   margin: auto;
-  margin-top: 14px;
+  margin-top: 28px;
   display: block;
-  width: 100vmin;
-  height: 70vmin;
+  width: 82%;
+  height: 82%;
 }
 
 #pick-color {
+}
+
+#cnv {
+  /*margin: auto;*/
+  /*border: #fbeff5;
+  border-style:ridge;
+  border-width: 28px;
+  border-radius: 12px;*/
 }
 
 #draw-place {
   margin: auto;
   width: inherit;
   height: inherit;
-  overflow: scroll;
+  /*overflow: scroll;*/
+  overflow:hidden;
+  border: #ff80bf dotted;
+  border-radius: 12px;
 }

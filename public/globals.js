@@ -1,6 +1,6 @@
 const globals = {
   ROWS: 256,
-  COLS: 256,
+  COLS: 384,
   INIT_COLOR: 15
 }
 
