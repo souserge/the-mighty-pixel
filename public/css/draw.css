@@ -13,9 +13,6 @@ main {
   height: 82%;
 }
 
-#pick-color {
-}
-
 #cnv {
   border: #fbeff5;
   border-style:ridge;
@@ -25,6 +22,7 @@ main {
 
 #draw-place {
   margin: auto;
+  margin-bottom: 0;
   width: inherit;
   height: inherit;
   /*overflow: scroll;*/

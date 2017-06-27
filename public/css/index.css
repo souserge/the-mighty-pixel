@@ -1,6 +1,6 @@
 header, main {
   margin: 12px auto;
-  width: 55%;
+  width: 64%;
 }
 
 header {
@@ -10,21 +10,38 @@ header {
 main {
   border: #ff80bf dotted;
   border-radius: 12px;
-  padding: 8px;
+  padding: 0px;
+  height: auto;
+  overflow: auto;
+}
+
+main article {
+  width: 33%;
+  display: inline-block;
 }
 
 main article p {
   line-height: 1.5em;
-  margin: 0;
-  padding: 0.5em 0 2em 1em;
+  margin: auto;
+  padding: 0.5em 0 0 1em;
+}
+
+article.description {
+  float: left;
+}
+
+article.motd {
+  float: right;
 }
 
 main nav {
-  margin: 0 auto;
+  display: inline-block;
+  width: 33%;
   text-align: center;
 }
 
 #puppy {
+  float: none;
   margin: 0 auto;
   width: 16vmax;
   height: 16vmax;
@@ -33,6 +50,7 @@ main nav {
   background-color: #4d2144;
   background-size: 90%;
   transition: all 0.3s;
+  margin-top: 1vmax;
   margin-bottom: 1vmax;
   padding: 0;
 }

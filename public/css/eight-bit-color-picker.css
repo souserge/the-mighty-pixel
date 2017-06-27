@@ -28,6 +28,7 @@
   height: 164px;
   background-color: #444;
   overflow: hidden;
+  transform: translate(0, -32px);
 
   /* Fade in/out rules */
   opacity: 0;

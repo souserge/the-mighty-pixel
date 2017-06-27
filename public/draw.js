@@ -43,20 +43,11 @@ function initUI() {
   cnv.parent('draw-place')
   cnv.id('cnv')
 
+  $('#cnv').attr('oncontextmenu','return false')
   cnv.mouseOut(() => {isMouseOnCanvas = false})
   cnv.mouseOver(() => {isMouseOnCanvas = true})
   colorPicker = new EightBitColorPicker({ el: 'pick-color' })
   palette = EightBitColorPicker.getDefaultPalette()
-}
-
-function centerCanvas() {
-  let x = (windowWidth - width) / 2;
-  let y = (windowHeight - height) / 2;
-  //cnv.position(x, y);
-}
-
-function windowResized() { //TODO: refactor to use mouseReleased()
-  centerCanvas();
 }
 
 function mousePressed() {
@@ -74,9 +65,7 @@ function mouseWheel(event) {
 }
 
 function handleCanvas() {
-  //scale(scl)
-  resizeCanvas(scl*globals.COLS, scl*globals.ROWS);
-  centerCanvas();
+  resizeCanvas(scl*globals.COLS, scl*globals.ROWS)
   background(palette[globals.INIT_COLOR])
   drawGrid()
 }
@@ -89,11 +78,10 @@ function handleMouse() {
   if (!focused || !isMouseOnCanvas) return
 
   const x = Math.floor((mouseX-28)/scl),
-        y = Math.floor((mouseY-28)/scl)
+        y = Math.floor((mouseY-28)/scl) // Realy bad way of handling this
   if (x < 0 || x >= globals.COLS || y < 0 || y >= globals.ROWS) return
 
-
-  const color = colorPicker.get8BitColor()
+  const color = (mouseButton == LEFT) ? colorPicker.get8BitColor() : globals.INIT_COLOR
   if (color < 0 || color >= 256) return
 
   const idx = y*globals.COLS + x
@@ -145,19 +133,19 @@ function handleScroll() {
   if (keyIsDown(LEFT_ARROW)) {
     scrollValueX = (scrollValueX > scrollStep) ? scrollValueX - scrollStep : 0
     console.log("left")
-    $("#draw-place").scrollLeft(scrollValueX);
+    $("#draw-place").scrollLeft(scrollValueX)
   } else if (keyIsDown(RIGHT_ARROW)) {
     scrollValueX = (scrollValueX < width - scrollStep) ? scrollValueX + scrollStep : width - 1
     console.log("right")
-    $("#draw-place").scrollLeft(scrollValueX);
+    $("#draw-place").scrollLeft(scrollValueX)
   }
   if (keyIsDown(UP_ARROW)) {
     scrollValueY = (scrollValueY > scrollStep) ? scrollValueY - scrollStep : 0
     console.log("up")
-    $("#draw-place").scrollTop(scrollValueY);
+    $("#draw-place").scrollTop(scrollValueY)
   } else if (keyIsDown(DOWN_ARROW)) {
     scrollValueY = (scrollValueY < height - scrollStep) ? scrollValueY + scrollStep : height - 1
     console.log("down")
-    $("#draw-place").scrollTop(scrollValueY);
+    $("#draw-place").scrollTop(scrollValueY)
   }
 }
