@@ -17,11 +17,10 @@ main {
 }
 
 #cnv {
-  /*margin: auto;*/
-  /*border: #fbeff5;
+  border: #fbeff5;
   border-style:ridge;
   border-width: 28px;
-  border-radius: 12px;*/
+  border-radius: 12px;
 }
 
 #draw-place {

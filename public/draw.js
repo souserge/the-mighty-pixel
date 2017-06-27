@@ -5,20 +5,20 @@ let grid = new Map(),
     palette = null,
     cnv = null
 
-const sclValues = [3, 4, 5, 6, 7, 8, 9, 10]
-let sclIdx = 0
+const sclValues = [4, 5, 6, 7, 8, 9, 10]
+let sclIdx = 2
 let scl = sclValues[sclIdx]
 let isMouseOnCanvas = false
 
 let scrollValueX = 0, scrollValueY = 0
-let scrollStep = 50
+let scrollStep = 10
 
 function setup() {
   initUI()
   background(palette[globals.INIT_COLOR])
   textSize(32)
   fill(255)
-  text("Loading canvas...", 10, 30)
+  text("Loading canvas...", 18, 40)
   socket.on('grid', function(data) {
     console.log('received grid')
     bufferToGrid(data)
@@ -47,7 +47,6 @@ function initUI() {
   cnv.mouseOver(() => {isMouseOnCanvas = true})
   colorPicker = new EightBitColorPicker({ el: 'pick-color' })
   palette = EightBitColorPicker.getDefaultPalette()
-  noLoop()
 }
 
 function centerCanvas() {
@@ -89,9 +88,10 @@ function mouseDragged() {
 function handleMouse() {
   if (!focused || !isMouseOnCanvas) return
 
-  const x = Math.floor(mouseX/scl),
-        y = Math.floor(mouseY/scl)
+  const x = Math.floor((mouseX-28)/scl),
+        y = Math.floor((mouseY-28)/scl)
   if (x < 0 || x >= globals.COLS || y < 0 || y >= globals.ROWS) return
+
 
   const color = colorPicker.get8BitColor()
   if (color < 0 || color >= 256) return
@@ -137,22 +137,26 @@ function scaleDown() {
   scl = sclValues[sclIdx]
 }
 
-function keyPressed() {
-  if (keyCode === LEFT_ARROW) {
-    scrollValueX = (scrollValueX > 0) ? scrollValueX - scrollStep : scrollValueX
+function draw() {
+    handleScroll()
+}
+
+function handleScroll() {
+  if (keyIsDown(LEFT_ARROW)) {
+    scrollValueX = (scrollValueX > scrollStep) ? scrollValueX - scrollStep : 0
     console.log("left")
     $("#draw-place").scrollLeft(scrollValueX);
-  } else if (keyCode === RIGHT_ARROW) {
-    scrollValueX = (scrollValueX < width) ? scrollValueX + scrollStep : scrollValueX
+  } else if (keyIsDown(RIGHT_ARROW)) {
+    scrollValueX = (scrollValueX < width - scrollStep) ? scrollValueX + scrollStep : width - 1
     console.log("right")
     $("#draw-place").scrollLeft(scrollValueX);
   }
-  if (keyCode === UP_ARROW) {
-    scrollValueY = (scrollValueY > 0) ? scrollValueY - scrollStep : scrollValueY
+  if (keyIsDown(UP_ARROW)) {
+    scrollValueY = (scrollValueY > scrollStep) ? scrollValueY - scrollStep : 0
     console.log("up")
     $("#draw-place").scrollTop(scrollValueY);
-  } else if (keyCode === DOWN_ARROW) {
-    scrollValueY = (scrollValueY < height) ? scrollValueY + scrollStep : scrollValueY
+  } else if (keyIsDown(DOWN_ARROW)) {
+    scrollValueY = (scrollValueY < height - scrollStep) ? scrollValueY + scrollStep : height - 1
     console.log("down")
     $("#draw-place").scrollTop(scrollValueY);
   }

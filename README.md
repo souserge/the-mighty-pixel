@@ -22,11 +22,11 @@ A collaborative drawing application
 ## A quick TODO list:
 * [ ] Add a database
 * [x] ~~Add a notion of an unfilled pixel (-1 colour value)~~
-* [ ] Add scaling and dragging instead of scrolling
+* [X] Add scaling and dragging instead of scrolling
 * [ ] Add adequate UI on draw.html
 * [ ] Add colour picker, colour history etc.
 * [x] Optimize sending data
-* [x] Optimize drawing the canvas
+* [ ] Optimize drawing the canvas
 * [ ] Refactor draw.js
 * [ ] Add the possibility of changing palettes
 * [ ] Add help messages
