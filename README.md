@@ -3,8 +3,8 @@ A collaborative drawing application
 
 \**comprehensive description should go here*\*
 
-*Server:* http://themightypixel.azurewebsites.net/ <br/>
-*Status:* <span style='color:red'>DOWN</span>
+*Server:* http://tmpixel.korzh.com/ <br/>
+*Status:* <span style='color:green'>UP</span>
 
 ## How to test on your local machine:
 1. download and install nodejs and npm
