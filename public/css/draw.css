@@ -30,3 +30,12 @@ main {
   border: #ff80bf dotted;
   border-radius: 12px;
 }
+
+#viberoom {
+  display: inline;
+  position: fixed;
+  bottom: 0px;
+  right: 4px;
+  font-size: 6px;
+  color: #233fe2;
+}
