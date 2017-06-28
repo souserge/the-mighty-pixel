@@ -4,7 +4,7 @@ A collaborative drawing application
 \**comprehensive description should go here*\*
 
 *Server:* http://tmpixel.korzh.com/ <br/>
-*Status:* <span style='color:green'>UP</span>
+*Status:* **DOWN**
 
 ## How to test on your local machine:
 1. download and install nodejs and npm
@@ -29,4 +29,4 @@ A collaborative drawing application
 * [ ] Optimize drawing the canvas
 * [ ] Refactor draw.js
 * [ ] Add the possibility of changing palettes
-* [ ] Add help messages
+* [X] Add help messages
