@@ -50,18 +50,16 @@ function initUI() {
   cnv.mouseOver(() => {isMouseOnCanvas = true})
   colorPicker = new EightBitColorPicker({ el: 'pick-color' })
   palette = EightBitColorPicker.getDefaultPalette()
-  handleContainer()
+  containerWidth = $("#draw-place").width()
+  containerHeight = $("#draw-place").height()
 }
 
 function windowResized() {
-  handleContainer()
-}
-
-function handleContainer() {
   containerWidth = $("#draw-place").width()
   containerHeight = $("#draw-place").height()
-  scrollValueX -= containerWidth
-  scrollValueY -= containerHeight
+}
+
+function scaleScroll() {
 }
 
 function mousePressed() {
@@ -70,13 +68,16 @@ function mousePressed() {
 
 function mouseWheel(event) {
   if (!isMouseOnCanvas) return true;
-
+  scrollValueX /= scl
+  scrollValueY /= scl
   if (event.delta < 0) {
     scaleUp()
   }
   else {
     scaleDown()
   }
+  scrollValueX = (scrollValueX) * scl
+  scrollValueY = (scrollValueY) * scl
   handleCanvas()
   return false;
 }
@@ -85,7 +86,7 @@ function handleCanvas() {
   resizeCanvas(scl*globals.COLS, scl*globals.ROWS)
   background(palette[globals.INIT_COLOR])
   drawGrid()
-  handleContainer()
+  scaleScroll()
 }
 
 function mouseDragged() {
