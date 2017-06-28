@@ -13,6 +13,9 @@ let isMouseOnCanvas = false
 let scrollValueX = 0, scrollValueY = 0
 let scrollStep = 10
 
+let containerWidth = 0
+let containerHeight = 0
+
 function setup() {
   initUI()
   background(palette[globals.INIT_COLOR])
@@ -47,6 +50,18 @@ function initUI() {
   cnv.mouseOver(() => {isMouseOnCanvas = true})
   colorPicker = new EightBitColorPicker({ el: 'pick-color' })
   palette = EightBitColorPicker.getDefaultPalette()
+  handleContainer()
+}
+
+function windowResized() {
+  handleContainer()
+}
+
+function handleContainer() {
+  containerWidth = $("#draw-place").width()
+  containerHeight = $("#draw-place").height()
+  scrollValueX -= containerWidth
+  scrollValueY -= containerHeight
 }
 
 function mousePressed() {
@@ -70,6 +85,7 @@ function handleCanvas() {
   resizeCanvas(scl*globals.COLS, scl*globals.ROWS)
   background(palette[globals.INIT_COLOR])
   drawGrid()
+  handleContainer()
 }
 
 function mouseDragged() {
@@ -128,7 +144,7 @@ function scaleDown() {
 }
 
 function draw() {
-    handleScroll()
+  handleScroll()
 }
 
 function handleScroll() {
@@ -136,14 +152,14 @@ function handleScroll() {
     scrollValueX = (scrollValueX > scrollStep) ? scrollValueX - scrollStep : 0
     $("#draw-place").scrollLeft(scrollValueX)
   } else if (keyIsDown(RIGHT_ARROW)) {
-    scrollValueX = (scrollValueX < width - scrollStep) ? scrollValueX + scrollStep : width - 1
+    scrollValueX = (scrollValueX < width - containerWidth + 56 + scrollStep) ? scrollValueX + scrollStep : width - containerWidth + 56
     $("#draw-place").scrollLeft(scrollValueX)
   }
   if (keyIsDown(UP_ARROW)) {
     scrollValueY = (scrollValueY > scrollStep) ? scrollValueY - scrollStep : 0
     $("#draw-place").scrollTop(scrollValueY)
   } else if (keyIsDown(DOWN_ARROW)) {
-    scrollValueY = (scrollValueY < height - scrollStep) ? scrollValueY + scrollStep : height - 1
+    scrollValueY = (scrollValueY < height - containerHeight + 56 + scrollStep) ? scrollValueY + scrollStep : height - containerHeight + 56
     $("#draw-place").scrollTop(scrollValueY)
   }
 }
