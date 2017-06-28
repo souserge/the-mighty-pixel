@@ -4,39 +4,16 @@ header, main {
 }
 
 header {
+  text-align: center;
   min-width: 20.5em;
 }
 
 main {
-  border: #ff80bf dotted;
-  border-radius: 12px;
-  padding: 0px;
-  height: auto;
+  padding: 0 1em;
   overflow: auto;
 }
 
-main article {
-  width: 33%;
-  display: inline-block;
-}
-
-main article p {
-  line-height: 1.5em;
-  margin: auto;
-  padding: 0.5em 0 0 1em;
-}
-
-article.description {
-  float: left;
-}
-
-article.motd {
-  float: right;
-}
-
-main nav {
-  display: inline-block;
-  width: 33%;
+article {
   text-align: center;
 }
 
@@ -62,4 +39,15 @@ main nav {
   height: 17vmax;
   transform: translate(0, -0.5vmax);
   margin-bottom: 0;
+}
+
+table { table-layout: fixed; }
+td {
+  vertical-align: middle;
+  font-size: 1.5em;
+  width: 33%;
+}
+
+td nav {
+  text-align: center;
 }
