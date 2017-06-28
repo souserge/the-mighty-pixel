@@ -1,6 +1,6 @@
 header, main {
   margin: 12px auto;
-  width: 64%;
+  width: 95%;
 }
 
 header {
@@ -11,6 +11,7 @@ header {
 main {
   padding: 0 1em;
   overflow: auto;
+  max-width: 49em;
 }
 
 article {
@@ -19,29 +20,35 @@ article {
 
 #puppy {
   float: none;
-  margin: 0 auto;
-  width: 16vmax;
-  height: 16vmax;
+  margin: 1em auto;
+  width: 12em;
+  height: 12em;
   border-radius: 100%;
   background: url('../img/puppy.gif') center center no-repeat;
   background-color: #4d2144;
   background-size: 90%;
   transition: all 0.3s;
-  margin-top: 1vmax;
-  margin-bottom: 1vmax;
   padding: 0;
 }
 
 #puppy:hover {
   background-image: url('../img/puppy_love.gif');
   background-size: 85%;
-  width: 17vmax;
-  height: 17vmax;
-  transform: translate(0, -0.5vmax);
+  width: 13em;
+  height: 13em;
+  transform: translate(0, -0.5em);
   margin-bottom: 0;
 }
 
-table { table-layout: fixed; }
+table {
+  table-layout: fixed;
+
+}
+
+main, table, tbody, tr, td {
+  overflow: visible;
+}
+
 td {
   vertical-align: middle;
   font-size: 1.5em;
