@@ -55,6 +55,8 @@ function mousePressed() {
 }
 
 function mouseWheel(event) {
+  if (!isMouseOnCanvas) return true;
+
   if (event.delta < 0) {
     scaleUp()
   }
@@ -62,6 +64,7 @@ function mouseWheel(event) {
     scaleDown()
   }
   handleCanvas()
+  return false;
 }
 
 function handleCanvas() {
