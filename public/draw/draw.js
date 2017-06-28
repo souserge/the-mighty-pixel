@@ -20,7 +20,6 @@ function setup() {
   fill(255)
   text("Loading canvas...", 18, 40)
   socket.on('grid', function(data) {
-    console.log('received grid')
     bufferToGrid(data)
     handleCanvas()
     socket.on('mouse', function(data) {
@@ -135,20 +134,16 @@ function draw() {
 function handleScroll() {
   if (keyIsDown(LEFT_ARROW)) {
     scrollValueX = (scrollValueX > scrollStep) ? scrollValueX - scrollStep : 0
-    console.log("left")
     $("#draw-place").scrollLeft(scrollValueX)
   } else if (keyIsDown(RIGHT_ARROW)) {
     scrollValueX = (scrollValueX < width - scrollStep) ? scrollValueX + scrollStep : width - 1
-    console.log("right")
     $("#draw-place").scrollLeft(scrollValueX)
   }
   if (keyIsDown(UP_ARROW)) {
     scrollValueY = (scrollValueY > scrollStep) ? scrollValueY - scrollStep : 0
-    console.log("up")
     $("#draw-place").scrollTop(scrollValueY)
   } else if (keyIsDown(DOWN_ARROW)) {
     scrollValueY = (scrollValueY < height - scrollStep) ? scrollValueY + scrollStep : height - 1
-    console.log("down")
     $("#draw-place").scrollTop(scrollValueY)
   }
 }
