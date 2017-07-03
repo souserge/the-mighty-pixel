@@ -12,6 +12,8 @@ class Connection {
 
   _listenGrid() {
     this.socket.on('grid', (data) => {
+      const grid = new Map()
+      
       const keys = new Uint32Array(data.keys)
       const values = new Uint8Array(data.values)
       keys.forEach((k, i) => {
