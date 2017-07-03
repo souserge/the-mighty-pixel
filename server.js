@@ -18,17 +18,18 @@ io.sockets.on('connection', function(socket) {
   const values = new Uint8Array(grid.values())
   socket.emit('grid', {
     keys: Buffer.from(keys.buffer),
+
     values: Buffer.from(values.buffer)
   })
 
-  socket.on('mouse', function(data) {
+  socket.on('pixel', function(data) {
     const idx = data.idx[0],
           color = data.color[0]
-    if (color == globals.INIT_COLOR) {
+    if (color === globals.INIT_COLOR) {
       grid.delete(idx)
     } else {
       grid.set(idx, color)
     }
-    socket.broadcast.emit('mouse', data) // broadcast to all EXCEPT the current socket
+    socket.broadcast.emit('pixel', data) // broadcast to all EXCEPT the current socket
   })
 })

@@ -5,14 +5,12 @@
   "repository": "escaip/the-mighty-pixel",
   "author": "Serge Korzh",
   "license": "MIT",
-
   "keywords": [
     "drawing",
     "pixel-art",
     "sockets",
     "p5.js"
   ],
-
   "main": "server.js",
   "scripts": {
     "start": "node server.js"

@@ -1,9 +1,8 @@
-const socket = io.connect()
-
 let grid = new Map(),
     colorPicker = null,
     palette = null,
-    cnv = null
+    cnv = null,
+    connection = null
 
 const sclValues = [4, 5, 6, 7, 8, 9, 10]
 let sclIdx = 2
@@ -22,22 +21,21 @@ function setup() {
   textSize(32)
   fill(255)
   text("Loading canvas...", 18, 40)
-  socket.on('grid', function(data) {
-    bufferToGrid(data)
+
+  connection = new Connection((grid) => {
+    grid = grid
     handleCanvas()
-    socket.on('mouse', function(data) {
-      const color = data.color[0],
-            idx = data.idx[0]
-      if (color == globals.INIT_COLOR) {
-        grid.delete(idx)
-      } else {
-        grid.set(idx, color)
-      }
-      const x = idx % globals.COLS,
-            y = Math.floor(idx / globals.COLS)
-      placePixel(x, y, color)
-    })
+  }, (idx, color) => {
+    if (color == globals.INIT_COLOR) {
+      grid.delete(idx)
+    } else {
+      grid.set(idx, color)
+    }
+    const x = idx % globals.COLS,
+          y = Math.floor(idx / globals.COLS)
+    placePixel(x, y, color)
   })
+  connection.connect()
 }
 
 function initUI() {
@@ -72,8 +70,7 @@ function mouseWheel(event) {
   scrollValueY /= scl
   if (event.delta < 0) {
     scaleUp()
-  }
-  else {
+  } else {
     scaleDown()
   }
   scrollValueX = (scrollValueX) * scl
@@ -100,16 +97,13 @@ function handleMouse() {
         y = Math.floor((mouseY-28)/scl) // Realy bad way of handling this
   if (x < 0 || x >= globals.COLS || y < 0 || y >= globals.ROWS) return
 
-  const color = (mouseButton == LEFT) ? colorPicker.get8BitColor() : globals.INIT_COLOR
+  const color = (mouseButton === LEFT) ? colorPicker.get8BitColor() : globals.INIT_COLOR
   if (color < 0 || color >= 256) return
 
   const idx = y*globals.COLS + x
+  connection.sendPixel(idx, color)
   grid.set(idx, color)
   placePixel(x, y, color)
-  socket.emit('mouse', {
-    idx: new Uint32Array([idx]),
-    color: new Uint8Array([color])
-  })
 }
 
 function drawGrid() {
@@ -124,14 +118,6 @@ function placePixel(x, y, color) {
   noStroke()
   fill(palette[color])
   rect(x*scl, y*scl, scl, scl)
-}
-
-function bufferToGrid(data) {
-  const keys = new Uint32Array(data.keys)
-  const values = new Uint8Array(data.values)
-  keys.forEach((k, i) => {
-    grid.set(k, values[i])
-  })
 }
 
 function scaleUp() {
