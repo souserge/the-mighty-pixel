@@ -1,13 +1,11 @@
 const express = require('express'),
       socket = require('socket.io'),
-      globals = require('./public/globals')
-      // azure = require('azure-storage')
+      config = require('./config')
 
 const app = express(),
-      port = process.env.port || process.env.PORT || 1337,
-      server = app.listen(port),
+      port = config.server.port,
+      server = app.listen(),
       io = socket(server),
-      // blobSvc = azure.createBlobService(),
       grid = new Map()
 
 app.use(express.static('public'))
@@ -25,7 +23,7 @@ io.sockets.on('connection', function(socket) {
   socket.on('pixel', function(data) {
     const idx = data.idx[0],
           color = data.color[0]
-    if (color === globals.INIT_COLOR) {
+    if (color === config.grid.initColor) {
       grid.delete(idx)
     } else {
       grid.set(idx, color)
