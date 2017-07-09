@@ -4,7 +4,7 @@ const express = require('express'),
 
 const app = express(),
       port = config.server.port,
-      server = app.listen(),
+      server = app.listen(port),
       io = socket(server),
       grid = new Map()
 
