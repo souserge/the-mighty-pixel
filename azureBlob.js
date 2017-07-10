@@ -1,14 +1,14 @@
 //const storage = require('azure-storage')
 const azure = require('azure')
-      ab = require('./config').azureBlob
+      confAB = require('./config').azureBlob
 
 class GridStorageManager {
   constructor(errorCallback) {
     this.errorCallback = errorCallback
-    this.blobService = azure.createBlobService(ab.connectionString)
+    this.blobService = azure.createBlobService(confAB.connectionString)
     this.isContainerCreated = false
 
-    this.blobService.createContainerIfNotExists(ab.blobContainerName,
+    this.blobService.createContainerIfNotExists(confAB.blobContainerName,
       (error, result, response) => {
       if (error) { this.errorCallback(error) }
       else { this.isContainerCreated = true }
@@ -22,14 +22,14 @@ class GridStorageManager {
     gridMapJSON = '{}'
     gridMetadataJSON = '{}'
 
-    this.blobService.createBlockBlobFromText(ab.blobContainerName,
-      ab.gridMapBlobName, gridMapJSON, (error, result, response) => {
+    this.blobService.createBlockBlobFromText(confAB.blobContainerName,
+      confAB.gridMapBlobName, gridMapJSON, (error, result, response) => {
       if(error) { this.errorCallback(error) }
       else { /* gridMap uploaded */ }
     })
 
-    this.blobService.createBlockBlobFromText(ab.blobContainerName,
-      ab.gridMetadataBlobName, gridMetadataJSON, (error, result, response) => {
+    this.blobService.createBlockBlobFromText(confAB.blobContainerName,
+      confAB.gridMetadataBlobName, gridMetadataJSON, (error, result, response) => {
       if(error) { this.errorCallback(error) }
       else { /* gridMetadata uploaded */ }
     })
@@ -44,14 +44,14 @@ class GridStorageManager {
   delete() {
     if (!this.isContainerCreated) return
 
-    this.blobService.deleteBlob(ab.blobContainerName,
-      ab.gridMapBlobName, (error, response) => {
+    this.blobService.deleteBlob(confAB.blobContainerName,
+      confAB.gridMapBlobName, (error, response) => {
       if(error) { this.errorCallback(error) }
       else { /* gridMap deleted */ }
     })
 
-    this.blobService.deleteBlob(ab.blobContainerName,
-      ab.gridMetadataBlobName, (error, response) => {
+    this.blobService.deleteBlob(confAB.blobContainerName,
+      confAB.gridMetadataBlobName, (error, response) => {
       if(error) { this.errorCallback(error) }
       else { /* gridMetadata deleted */ }
     })
