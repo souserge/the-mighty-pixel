@@ -38,7 +38,25 @@ class GridStorageManager {
   download() {
     if (!this.isContainerCreated) return
 
-    //TODO: dowload and return Grid object
+    this.blobService.getBlobToText(confAB.blobContainerName,
+      confAB.gridMapBlobName, (error, result, response) => {
+      if(error) { this.errorCallback(error) }
+      else {
+        //TODO: figure out how to get JSON
+        console.log(result)
+      }
+    })
+
+    this.blobService.getBlobToText(confAB.blobContainerName,
+      confAB.gridMetadataBlobName, (error, result, response) => {
+      if(error) { this.errorCallback(error) }
+      else {
+        //TODO: figure out how to get JSON
+        console.log(result)
+      }
+    })
+
+    //TODO: construct a Grid object from JSON strings
   }
 
   delete() {
