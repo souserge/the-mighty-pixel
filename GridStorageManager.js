@@ -42,6 +42,7 @@ class GridStorageManager {
   download() {
     if (!this.isContainerCreated) return
 
+
     this.blobService.getBlobToText(confAB.blobContainerName,
       confAB.gridMapBlobName, (error, result, response) => {
       if(error) { this.errorCallback(error) }
@@ -60,7 +61,10 @@ class GridStorageManager {
       }
     })
 
+    grid = new Map()
+    config = {}
     //TODO: construct a Grid object from JSON strings
+    return [grid, config]
   }
 
   delete() {

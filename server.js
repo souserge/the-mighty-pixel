@@ -13,6 +13,9 @@ const app = express(),
         console.log(error)
       })
 
+if (!storageManager.isNew) {
+  [grid, config.grid] = storageManager.download()
+}
 
 app.use(express.static('public'))
 console.log("server is running on PORT: " + port)
@@ -35,5 +38,8 @@ io.sockets.on('connection', function(socket) {
       grid.set(idx, color)
     }
     socket.broadcast.emit('pixel', data) // broadcast to all EXCEPT the current socket
+
+    //TODO: upload on server shutdown
+    storageManager.upload(grid, config.grid)
   })
 })
