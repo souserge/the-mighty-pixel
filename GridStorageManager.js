@@ -75,3 +75,7 @@ class GridStorageManager {
     })
   }
 }
+
+
+
+module.exports = GridStorageManager

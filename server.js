@@ -1,12 +1,18 @@
 const express = require('express'),
       socket = require('socket.io'),
-      config = require('./config')
+      config = require('./config'),
+      GridStorageManager = require('./GridStorageManager')
 
 const app = express(),
       port = config.server.port,
       server = app.listen(port),
       io = socket(server),
-      grid = new Map()
+      grid = new Map(),
+      storageManager = new GridStorageManager((error) => {
+        console.log('Azure Blob error: ')
+        console.log(error)
+      })
+
 
 app.use(express.static('public'))
 console.log("server is running on PORT: " + port)
