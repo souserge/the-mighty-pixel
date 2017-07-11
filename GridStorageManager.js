@@ -7,11 +7,15 @@ class GridStorageManager {
     this.errorCallback = errorCallback
     this.blobService = azure.createBlobService(confAB.connectionString)
     this.isContainerCreated = false
+    this.isNew = true
 
     this.blobService.createContainerIfNotExists(confAB.blobContainerName,
       (error, result, response) => {
       if (error) { this.errorCallback(error) }
-      else { this.isContainerCreated = true }
+      else {
+        this.isContainerCreated = true
+        this.isNew = result.created
+      }
     })
   }
 
