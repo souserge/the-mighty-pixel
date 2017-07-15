@@ -20,8 +20,9 @@ function setupServer() {
   process.on('SIGTERM', handleShutdown)
 
   if (!storageManager.isNew) {
-    console.log('Downloading...')
+    console.log('Downloading grid...')
     storageManager.download().then((gc) => {
+      console.log('Download complete!')
       grid = gc[0]
       config.grid = gc[1]
       startServer()
@@ -58,8 +59,10 @@ function startServer() {
 }
 
 function handleShutdown() {
-  console.log('Shutting down...')
+  console.log('Uploading grid...')
   storageManager.upload(grid, config.grid).then(() => {
+    console.log('Upload complete!')
+    console.log('Shutting down...')
     process.exit()
   })
 }

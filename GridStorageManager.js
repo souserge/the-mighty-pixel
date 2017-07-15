@@ -32,7 +32,7 @@ class GridStorageManager {
     return new Promise((resolve, reject) => {
       let resolveCount = 0
 
-      const onLoad = () => {
+      const onUpload = () => {
         resolveCount++
         if (resolveCount > 1) {
           resolve()
