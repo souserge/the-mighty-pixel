@@ -1,6 +1,6 @@
 const azure = require('azure-storage'),
 //const azure = require('azure'),
-      confAB = require('./config').azureBlob
+confAB = require('./config').azureBlob
 
 class GridStorageManager {
   constructor(errorCallback, createdCallback) {
@@ -24,7 +24,9 @@ class GridStorageManager {
   upload(gridMap, gridMetadata) {
     if (!this.isContainerCreated) return
 
-    let gridMapJSON = JSON.stringify(gridMap)
+    const mapToJSON = (map) => { return JSON.stringify([...map]) }
+
+    let gridMapJSON = mapToJSON(gridMap)
     let gridMetadataJSON = JSON.stringify(gridMetadata)
 
     this.blobService.createBlockBlobFromText(confAB.blobContainerName,
@@ -43,6 +45,7 @@ class GridStorageManager {
   download() {
     if (!this.isContainerCreated) return
 
+    const JSONToMap = (str) => { return new Map(JSON.parse(str)) }
 
     this.blobService.getBlobToText(confAB.blobContainerName,
       confAB.gridMapBlobName, (error, result, response) => {
