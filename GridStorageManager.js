@@ -47,28 +47,44 @@ class GridStorageManager {
 
     const JSONToMap = (str) => { return new Map(JSON.parse(str)) }
 
-    this.blobService.getBlobToText(confAB.blobContainerName,
-      confAB.gridMapBlobName, (error, result, response) => {
-      if(error) { this.errorCallback(error) }
-      else {
-        //TODO: figure out how to get JSON
-        console.log(result)
-      }
-    })
+    return new Promise((resolve, reject) => {
+      let resolveCount = 0
+      let grid = new Map()
+      let config = {}
 
-    this.blobService.getBlobToText(confAB.blobContainerName,
-      confAB.gridMetadataBlobName, (error, result, response) => {
-      if(error) { this.errorCallback(error) }
-      else {
-        //TODO: figure out how to get JSON
-        console.log(result)
+      const onLoad = () => {
+        resolveCount++
+        console.log('resolveCount: ' + resolveCount + '; config: ')
+        console.log(config)
+        if (resolveCount > 1) {
+          resolve([grid, config])
+        }
       }
-    })
 
-    let grid = new Map()
-    let config = {}
-    //TODO: construct a Grid object from JSON strings
-    return [grid, config]
+      this.blobService.getBlobToText(confAB.blobContainerName,
+        confAB.gridMapBlobName, (error, result, response) => {
+        if(error) {
+          this.errorCallback(error)
+          reject(error)
+        }
+        else {
+          grid = JSONToMap(result)
+          onLoad()
+        }
+      })
+
+      this.blobService.getBlobToText(confAB.blobContainerName,
+        confAB.gridMetadataBlobName, (error, result, response) => {
+        if(error) {
+          this.errorCallback(error)
+          reject(error)
+        }
+        else {
+          config = JSON.parse(result)
+          onLoad()
+        }
+      })
+    })
   }
 
   delete() {

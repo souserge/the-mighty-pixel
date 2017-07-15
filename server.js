@@ -16,16 +16,21 @@ const storageManager = new GridStorageManager((error) => {
 }, (result) => {
   if (!storageManager.isNew) {
     console.log('Downloading...')
-    let [g, c] = storageManager.download()
-    grid = g
-    config.grid = c
+    storageManager.download().then((gc) => {
+      grid = gc[0]
+      config.grid = gc[1]
+      startServer()
+    })
+  } else {
+    startServer()
   }
-  startServer()
 })
 
 function startServer() {
   app.use(express.static('public'))
-  console.log("server is running on PORT: " + port)
+  console.log('server is running on PORT: ' + port)
+  console.log(grid)
+  console.log(config.grid)
   io.sockets.on('connection', function(socket) {
     console.log('new connection: ' + socket.id)
     const keys = new Uint32Array(grid.keys())
