@@ -71,20 +71,13 @@ class GridStorageManager {
   delete() {
     if (!this.isContainerCreated) return
 
-    this.blobService.deleteBlob(confAB.blobContainerName,
-      confAB.gridMapBlobName, (error, response) => {
+    this.blobService.deleteContainerIfExists(confAB.blobContainerName,
+      (error, result, response) => {
       if(error) { this.errorCallback(error) }
       else { /* gridMap deleted */ }
     })
-
-    this.blobService.deleteBlob(confAB.blobContainerName,
-      confAB.gridMetadataBlobName, (error, response) => {
-      if(error) { this.errorCallback(error) }
-      else { /* gridMetadata deleted */ }
-    })
   }
 }
-
 
 
 module.exports = GridStorageManager
