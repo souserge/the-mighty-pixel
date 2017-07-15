@@ -29,16 +29,37 @@ class GridStorageManager {
     let gridMapJSON = mapToJSON(gridMap)
     let gridMetadataJSON = JSON.stringify(gridMetadata)
 
-    this.blobService.createBlockBlobFromText(confAB.blobContainerName,
-      confAB.gridMapBlobName, gridMapJSON, (error, result, response) => {
-      if(error) { this.errorCallback(error) }
-      else { /* gridMap uploaded */ }
-    })
+    return new Promise((resolve, reject) => {
+      let resolveCount = 0
 
-    this.blobService.createBlockBlobFromText(confAB.blobContainerName,
-      confAB.gridMetadataBlobName, gridMetadataJSON, (error, result, response) => {
-      if(error) { this.errorCallback(error) }
-      else { /* gridMetadata uploaded */ }
+      const onLoad = () => {
+        resolveCount++
+        if (resolveCount > 1) {
+          resolve()
+        }
+      }
+
+      this.blobService.createBlockBlobFromText(confAB.blobContainerName,
+        confAB.gridMapBlobName, gridMapJSON, (error, result, response) => {
+          if(error) {
+            this.errorCallback(error)
+            reject(error)
+          }
+          else {
+            onUpload()
+          }
+      })
+
+      this.blobService.createBlockBlobFromText(confAB.blobContainerName,
+        confAB.gridMetadataBlobName, gridMetadataJSON, (error, result, response) => {
+          if(error) {
+            this.errorCallback(error)
+            reject(error)
+          }
+          else {
+            onUpload()
+          }
+      })
     })
   }
 
@@ -52,7 +73,7 @@ class GridStorageManager {
       let grid = new Map()
       let config = {}
 
-      const onLoad = () => {
+      const onDownoad = () => {
         resolveCount++
         console.log('resolveCount: ' + resolveCount + '; config: ')
         console.log(config)
@@ -69,7 +90,7 @@ class GridStorageManager {
         }
         else {
           grid = JSONToMap(result)
-          onLoad()
+          onDownoad()
         }
       })
 
@@ -81,7 +102,7 @@ class GridStorageManager {
         }
         else {
           config = JSON.parse(result)
-          onLoad()
+          onDownoad()
         }
       })
     })
