@@ -1,14 +1,15 @@
 const express = require('express'),
       socket = require('socket.io'),
       config = require('./config'),
-      GridStorageManager = require('./GridStorageManager')
+      GridStorageManager = require('./GridStorageManager'),
+      gridTemplates = require('./gridTemplates')
 
 const app = express(),
       port = config.server.port,
       server = app.listen(port),
       io = socket(server)
 
-let grid = new Map()
+let grid = new Map(gridTemplates.charmander)
 
 const storageManager = new GridStorageManager((error) => {
   console.log('Azure Blob error: ')
