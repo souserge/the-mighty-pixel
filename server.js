@@ -13,7 +13,13 @@ let grid = new Map()
 const storageManager = new GridStorageManager((error) => {
   console.log('Azure Blob error: ')
   console.log(error)
-}, (result) => {
+}, setupServer)
+
+function setupServer() {
+  process.on('exit', handleShutdown)
+  process.on('SIGINT', handleShutdown)
+  process.on('SIGTERM', handleShutdown)
+
   if (!storageManager.isNew) {
     console.log('Downloading...')
     storageManager.download().then((gc) => {
@@ -24,13 +30,11 @@ const storageManager = new GridStorageManager((error) => {
   } else {
     startServer()
   }
-})
+}
 
 function startServer() {
   app.use(express.static('public'))
   console.log('server is running on PORT: ' + port)
-  console.log(grid)
-  console.log(config.grid)
   io.sockets.on('connection', function(socket) {
     console.log('new connection: ' + socket.id)
     const keys = new Uint32Array(grid.keys())
@@ -50,9 +54,12 @@ function startServer() {
         grid.set(idx, color)
       }
       socket.broadcast.emit('pixel', data) // broadcast to all EXCEPT the current socket
-
-      //TODO: upload on server shutdown
-      storageManager.upload(grid, config.grid)
     })
   })
+}
+
+function handleShutdown() {
+  console.log('Shutting down...')
+  storageManager.upload(grid, config.grid)
+  process.exit()
 }
