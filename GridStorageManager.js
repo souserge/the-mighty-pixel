@@ -21,12 +21,11 @@ class GridStorageManager {
     })
   }
 
-  upload(grid) {
+  upload(gridMap, gridMetadata) {
     if (!this.isContainerCreated) return
 
-    //TODO: do something with grid
-    let gridMapJSON = '{}'
-    let gridMetadataJSON = '{}'
+    let gridMapJSON = JSON.stringify(gridMap)
+    let gridMetadataJSON = JSON.stringify(gridMetadata)
 
     this.blobService.createBlockBlobFromText(confAB.blobContainerName,
       confAB.gridMapBlobName, gridMapJSON, (error, result, response) => {
