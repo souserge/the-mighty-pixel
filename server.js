@@ -16,7 +16,6 @@ const storageManager = new GridStorageManager((error) => {
 }, setupServer)
 
 function setupServer() {
-  process.on('exit', handleShutdown)
   process.on('SIGINT', handleShutdown)
   process.on('SIGTERM', handleShutdown)
 
@@ -60,6 +59,7 @@ function startServer() {
 
 function handleShutdown() {
   console.log('Shutting down...')
-  storageManager.upload(grid, config.grid)
-  process.exit()
+  storageManager.upload(grid, config.grid).then(() => {
+    process.exit()
+  })
 }
