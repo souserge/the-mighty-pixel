@@ -75,8 +75,6 @@ class GridStorageManager {
 
       const onDownoad = () => {
         resolveCount++
-        console.log('resolveCount: ' + resolveCount + '; config: ')
-        console.log(config)
         if (resolveCount > 1) {
           resolve([grid, config])
         }
