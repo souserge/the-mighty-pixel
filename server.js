@@ -19,8 +19,8 @@ const storageManager = new GridStorageManager((error) => {
     let [g, c] = storageManager.download()
     grid = g
     config.grid = c
-    startServer()
   }
+  startServer()
 })
 
 function startServer() {
