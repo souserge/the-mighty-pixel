@@ -57,3 +57,8 @@ typings/
 # dotenv environment variables file
 .env
 
+# azurite config
+__azurite_db__.json
+
+# azure local storage folder
+__blobstorage__/

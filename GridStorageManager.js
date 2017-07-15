@@ -1,10 +1,11 @@
-//const storage = require('azure-storage')
-const azure = require('azure')
+const azure = require('azure-storage'),
+//const azure = require('azure'),
       confAB = require('./config').azureBlob
 
 class GridStorageManager {
-  constructor(errorCallback) {
+  constructor(errorCallback, createdCallback) {
     this.errorCallback = errorCallback
+    this.createdCallback = createdCallback
     this.blobService = azure.createBlobService(confAB.connectionString)
     this.isContainerCreated = false
     this.isNew = true
@@ -15,6 +16,7 @@ class GridStorageManager {
       else {
         this.isContainerCreated = true
         this.isNew = result.created
+        this.createdCallback(result)
       }
     })
   }
@@ -23,8 +25,8 @@ class GridStorageManager {
     if (!this.isContainerCreated) return
 
     //TODO: do something with grid
-    gridMapJSON = '{}'
-    gridMetadataJSON = '{}'
+    let gridMapJSON = '{}'
+    let gridMetadataJSON = '{}'
 
     this.blobService.createBlockBlobFromText(confAB.blobContainerName,
       confAB.gridMapBlobName, gridMapJSON, (error, result, response) => {
@@ -61,8 +63,8 @@ class GridStorageManager {
       }
     })
 
-    grid = new Map()
-    config = {}
+    let grid = new Map()
+    let config = {}
     //TODO: construct a Grid object from JSON strings
     return [grid, config]
   }
