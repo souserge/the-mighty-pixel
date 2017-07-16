@@ -37,7 +37,7 @@ function startServer(grid, metadata) {
   })
 
   app.use(express.static('public'))
-  console.log('server is running on PORT: ' + port)
+  console.log('server is running on PORT: ' + config.server.port)
   io.sockets.on('connection', function(socket) {
     console.log('new connection: ' + socket.id)
     const keys = new Uint32Array(grid.keys())
