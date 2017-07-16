@@ -51,11 +51,7 @@ function startServer(grid, metadata) {
     socket.on('pixel', function(data) {
       const idx = data.idx[0],
             color = data.color[0]
-      if (color === metadata.initColor) {
-        grid.delete(idx)
-      } else {
-        grid.set(idx, color)
-      }
+      color === metadata.initColor ? grid.delete(idx) : grid.set(idx, color)
       socket.broadcast.emit('pixel', data) // broadcast to all EXCEPT the current socket
     })
   })

@@ -1,5 +1,4 @@
 const azure = require('azure-storage'),
-//const azure = require('azure'),
 confAB = require('./config').azureBlob
 
 class GridStorageManager {
