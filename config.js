@@ -10,7 +10,7 @@ module.exports = {
   },
 
   azureBlob: {
-    connectionString: process.env.CUSTOM_CONNSTR_azureStorage
+    connectionString: process.env.StorageConnectionString
       || 'BlobEndpoint=http://127.0.0.1:10000/devstoreaccount1;',
     blobContainerName: 'grid-container',
     gridMapBlobName: 'grid-map',
