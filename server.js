@@ -1,15 +1,13 @@
 const express = require('express'),
-      socket = require('socket.io'),
-      config = require('./config'),
+      socket = require('socket.io')
+
+const config = require('./config'),
       GridStorageManager = require('./GridStorageManager'),
       gridTemplates = require('./gridTemplates')
 
 const app = express(),
-      port = config.server.port,
-      server = app.listen(port),
+      server = app.listen(config.server.port),
       io = socket(server)
-
-let grid = new Map(gridTemplates.charmander)
 
 const storageManager = new GridStorageManager((error) => {
   console.log('Azure Blob error: ')
@@ -17,23 +15,27 @@ const storageManager = new GridStorageManager((error) => {
 }, setupServer)
 
 function setupServer() {
-  process.on('SIGINT', handleShutdown)
-  process.on('SIGTERM', handleShutdown)
-
   if (!storageManager.isNew) {
     console.log('Downloading grid...')
     storageManager.download().then((gc) => {
       console.log('Download complete!')
       grid = gc[0]
       config.grid = gc[1]
-      startServer()
+      startServer(...gc)
     })
   } else {
-    startServer()
+    startServer(new Map(gridTemplates.charmander), config.grid)
   }
 }
 
-function startServer() {
+function startServer(grid, metadata) {
+  process.on('SIGINT', () => {
+    handleShutdown(grid, metadata)
+  })
+  process.on('SIGTERM', () => {
+    handleShutdown(grid, metadata)
+  })
+
   app.use(express.static('public'))
   console.log('server is running on PORT: ' + port)
   io.sockets.on('connection', function(socket) {
@@ -49,7 +51,7 @@ function startServer() {
     socket.on('pixel', function(data) {
       const idx = data.idx[0],
             color = data.color[0]
-      if (color === config.grid.initColor) {
+      if (color === metadata.initColor) {
         grid.delete(idx)
       } else {
         grid.set(idx, color)
@@ -59,9 +61,9 @@ function startServer() {
   })
 }
 
-function handleShutdown() {
+function handleShutdown(grid, metadata) {
   console.log('Uploading grid...')
-  storageManager.upload(grid, config.grid).then(() => {
+  storageManager.upload(grid, metadata).then(() => {
     console.log('Upload complete!')
     console.log('Shutting down...')
     process.exit()
