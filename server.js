@@ -29,6 +29,17 @@ function setupServer() {
 }
 
 function startServer(grid, metadata) {
+  let isGridChanged = false
+  setInterval(() => {
+    if (isGridChanged) {
+      console.log('Uploading grid...')
+      storageManager.upload(grid, metadata).then(() => {
+        console.log('Upload complete!')
+      })
+      isGridChanged = false
+    }
+  }, 120 * 1000)
+
   process.on('SIGINT', () => {
     handleShutdown(grid, metadata)
   })
@@ -49,6 +60,8 @@ function startServer(grid, metadata) {
     })
 
     socket.on('pixel', function(data) {
+      isGridChanged = true
+
       const idx = data.idx[0],
             color = data.color[0]
       color === metadata.initColor ? grid.delete(idx) : grid.set(idx, color)
