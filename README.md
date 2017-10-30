@@ -4,7 +4,7 @@ A collaborative drawing application
 \**comprehensive description should go here*\*
 
 *Server:* http://tmpixel.korzh.com/ <br/>
-*Status:* **DOWN**
+*Status:* **UP**
 
 ## How to test on your local machine:
 1. download and install nodejs and npm
@@ -20,8 +20,8 @@ A collaborative drawing application
 * clean cache: `npm cache clean`
 
 ## A quick TODO list:
-* [ ] Add a database
-* [x] ~~Add a notion of an unfilled pixel (-1 colour value)~~
+* [X] Add a database
+* [ ] ~~Add a notion of an unfilled pixel (-1 colour value)~~
 * [X] Add scaling and dragging instead of scrolling
 * [ ] Add adequate UI on draw.html
 * [ ] Add colour picker, colour history etc.
