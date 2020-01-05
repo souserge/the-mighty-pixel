@@ -4,7 +4,7 @@ A collaborative drawing application
 \**comprehensive description should go here*\*
 
 *Server:* http://tmpixel.korzh.com/ <br/>
-*Status:* **UP**
+*Status:* **DOWN**
 
 ## How to test on your local machine:
 1. download and install nodejs and npm
